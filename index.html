@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jotta Dev — JD Desenvolvimento de Software</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Barlow+Condensed:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0e0b09;
+      --surface:  #161210;
+      --border:   #2a1f15;
+      --orange:   #f05a1a;
+      --orange2:  #e03a00;
+      --white:    #f2f0ec;
+      --muted:    #7a6f68;
+      --font-head:'Barlow', sans-serif;
+      --font-cond:'Barlow Condensed', sans-serif;
+      --font-mono:'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-head);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ─────────────────────────────── */
+    header {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 40px 60px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 52px 52px;
+      opacity: 0.35;
+    }
+
+    .bg-glow {
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 340px;
+      background: radial-gradient(ellipse at center, rgba(240,90,26,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── LOGO ───────────────────────────────── */
+    .logo-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+
+    /* Hexagon SVG badge */
+    .hex-badge {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+    }
+
+    .hex-badge svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hex-initials {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--orange);
+      letter-spacing: 1px;
+    }
+
+    .logo-text-block {
+      text-align: left;
+    }
+
+    .logo-title {
+      font-family: var(--font-cond);
+      font-weight: 900;
+      font-size: 2.8rem;
+      line-height: 0.9;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+
+    .logo-title .j { color: var(--white); }
+    .logo-title .otta { color: var(--white); }
+    .logo-title .d { color: var(--orange); }
+    .logo-title .ev { color: var(--white); }
+
+    .logo-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── TAGS ───────────────────────────────── */
+    .header-tags {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .htag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .htag-orange {
+      border-color: var(--orange2);
+      color: var(--orange);
+      background: rgba(240,90,26,0.07);
+    }
+
+    /* ── SOCIAL STRIP ────────────────────────── */
+    .social-strip {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .social-strip-text {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 520px;
+      margin-bottom: 4px;
+    }
+
+    .social-strip-text strong {
+      color: var(--white);
+    }
+
+    .social-strip-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border-radius: 3px;
+      border: 1px solid;
+      text-decoration: none;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+
+    .social-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .btn-whatsapp {
+      color: #25d366;
+      border-color: #1a6e3a;
+      background: rgba(37,211,102,0.06);
+    }
+    .btn-whatsapp:hover { background: rgba(37,211,102,0.14); border-color: #25d366; }
+
+    .btn-telegram {
+      color: #4db8f0;
+      border-color: #1a4a6e;
+      background: rgba(77,184,240,0.06);
+    }
+    .btn-telegram:hover { background: rgba(77,184,240,0.14); border-color: #4db8f0; }
+
+    .btn-instagram {
+      color: #e8608a;
+      border-color: #6e1a3a;
+      background: rgba(232,96,138,0.06);
+    }
+    .btn-instagram:hover { background: rgba(232,96,138,0.14); border-color: #e8608a; }
+
+    /* ── MAIN ────────────────────────────────── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 64px 40px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    /* ── SECTION LABEL ───────────────────────── */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 14px;
+    }
+
+    .section h2 {
+      font-family: var(--font-cond);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .section p {
+      color: #b8b0a8;
+      font-size: 1rem;
+      margin-bottom: 14px;
+      max-width: 680px;
+    }
+
+    /* ── CARD GRID ───────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 22px 18px;
+      transition: border-color .2s;
+    }
+
+    .card:hover { border-color: var(--orange2); }
+
+    .card-icon { font-size: 1.5rem; margin-bottom: 10px; }
+
+    .card h3 {
+      font-family: var(--font-cond);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      color: var(--white);
+    }
+
+    .card p { font-size: 0.82rem; color: var(--muted); margin: 0; }
+
+    /* ── NICHE CARDS ─────────────────────────── */
+    .niche-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .niche-card {
+      border-radius: 4px;
+      padding: 26px 22px;
+      border: 1px solid;
+    }
+
+    .niche-casino {
+      background: linear-gradient(135deg, rgba(240,90,26,0.07), transparent);
+      border-color: var(--orange2);
+    }
+
+    .niche-hot {
+      background: linear-gradient(135deg, rgba(240,90,26,0.04), transparent);
+      border-color: var(--border);
+    }
+
+    .niche-title {
+      font-family: var(--font-cond);
+      font-size: 1.1rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .niche-casino .niche-title { color: var(--orange); }
+    .niche-hot .niche-title    { color: var(--white); }
+    .niche-card p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+    /* ── BLOCKQUOTE ──────────────────────────── */
+    blockquote {
+      border-left: 3px solid var(--orange);
+      padding: 20px 28px;
+      background: var(--surface);
+      border-radius: 0 4px 4px 0;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #ccc5bc;
+      line-height: 1.7;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 12px;
+      font-style: normal;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--orange);
+      letter-spacing: 2px;
+    }
+
+    /* ── DIFF LIST ───────────────────────────── */
+    .diff-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .diff-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.95rem;
+      color: #b8b0a8;
+    }
+
+    .diff-list li::before {
+      content: '▸';
+      color: var(--orange);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    /* ── CTA ─────────────────────────────────── */
+    .cta-box {
+      background: linear-gradient(135deg, rgba(240,90,26,0.12), rgba(240,90,26,0.03));
+      border: 1px solid var(--orange2);
+      border-radius: 4px;
+      padding: 40px 36px;
+      text-align: center;
+    }
+
+    .cta-box h2 {
+      font-family: var(--font-cond);
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cta-box p { color: var(--muted); margin-bottom: 28px; font-size: 0.95rem; }
+
+    .cta-btn-wrap { display: flex; justify-content: center; }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--orange);
+      color: #0e0b09;
+      font-family: var(--font-cond);
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 40px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+
+    .cta-btn:hover { background: var(--orange2); color: #fff; }
+
+    /* ── CONTADOR ────────────────────────────── */
+    .counter-strip {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .counter-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .ci-item {
+      flex: 1;
+      min-width: 160px;
+      padding: 32px 28px;
+      border-right: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .ci-item:last-child { border-right: none; }
+    .ci-num {
+      font-family: var(--font-cond);
+      font-weight: 900;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      line-height: 1;
+      color: var(--white);
+      letter-spacing: -2px;
+    }
+    .ci-num .ci-suffix { color: var(--orange); }
+    .ci-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .ci-bar {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      background: var(--orange);
+      width: 0%;
+      transition: width 1.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    @media (max-width: 600px) {
+      .ci-item { flex: 1 1 50%; border-bottom: 1px solid var(--border); }
+    }
+
+    /* ── REVIEWS ─────────────────────────────── */
+    .reviews-section {
+      padding: 48px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .reviews-header {
+      max-width: 860px;
+      margin: 0 auto 28px;
+    }
+
+    .reviews-header .section-label {
+      margin-bottom: 8px;
+    }
+
+    .reviews-header h2 {
+      font-family: var(--font-cond);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .reviews-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .reviews-summary .avg-score {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--orange);
+      font-family: var(--font-cond);
+    }
+
+    .stars-display { color: #f5a623; font-size: 0.95rem; letter-spacing: 2px; }
+
+    .reviews-track-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .reviews-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 16px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .reviews-track::-webkit-scrollbar { height: 4px; }
+    .reviews-track::-webkit-scrollbar-track { background: transparent; }
+    .reviews-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .review-card {
+      flex: 0 0 calc(33.333% - 11px);
+      min-width: 240px;
+      scroll-snap-align: start;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color .2s;
+    }
+
+    .review-card:hover { border-color: var(--orange2); }
+
+    .review-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .review-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--orange);
+      flex-shrink: 0;
+      border: 1px solid var(--orange2);
+    }
+
+    .review-meta { flex: 1; }
+
+    .review-name {
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .review-role {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    .review-stars { color: #f5a623; font-size: 0.8rem; letter-spacing: 2px; }
+
+    .review-text {
+      font-size: 0.84rem;
+      color: #b8b0a8;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .review-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      background: rgba(240,90,26,0.08);
+      border: 1px solid var(--orange2);
+      color: var(--orange);
+      align-self: flex-start;
+    }
+
+    .reviews-fade-right {
+      position: absolute;
+      right: 0; top: 0; bottom: 16px;
+      width: 60px;
+      background: linear-gradient(to right, transparent, var(--surface));
+      pointer-events: none;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .scroll-hint {
+      text-align: center;
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .scroll-hint span { color: var(--orange); }
+
+    @media (max-width: 600px) {
+      .reviews-section { padding-left: 24px; padding-right: 24px; }
+      .review-card { flex: 0 0 80vw; }
+    }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    footer span { color: var(--orange); }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 600px) {
+      header, main { padding-left: 24px; padding-right: 24px; }
+      .niche-row { grid-template-columns: 1fr; }
+      .logo-title { font-size: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+
+    /* ══════════════════════════════════════════
+       SPLASH SCREEN
+    ══════════════════════════════════════════ */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #080604;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    #splash.hide {
+      opacity: 0;
+      transform: scale(1.03);
+      pointer-events: none;
+    }
+    .splash-progress-bar {
+      position: absolute;
+      top: 0; left: 0;
+      height: 2px;
+      width: 100%;
+      background: var(--border);
+    }
+    .splash-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--orange2), var(--orange));
+      transition: width 0.1s linear;
+    }
+    .splash-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 52px 52px;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+    .splash-bg-glow {
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse at center, rgba(240,90,26,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .splash-inner {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+      width: 100%;
+      max-width: 560px;
+      padding: 0 24px;
+    }
+    .splash-terminal-panel {
+      width: 100%;
+      background: rgba(22,18,16,0.8);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .splash-terminal-panel.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .splash-topbar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 14px;
+      background: #0e0b09;
+      border-bottom: 1px solid var(--border);
+    }
+    .splash-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .splash-dot-r { background: #ff5f57; }
+    .splash-dot-y { background: #febc2e; }
+    .splash-dot-g { background: #28c840; }
+    .splash-topbar-title {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-left: 6px;
+      text-transform: uppercase;
+    }
+    .splash-term-body {
+      padding: 16px 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-height: 130px;
+    }
+    .splash-term-row {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .splash-term-row.show { opacity: 1; transform: translateX(0); }
+    .splash-term-row .splash-prompt { color: var(--orange); margin-right: 6px; }
+    .splash-term-row.tok .splash-icon { color: #25d366; margin-right: 6px; }
+    .splash-term-row.twarn .splash-icon { color: #febc2e; margin-right: 6px; }
+    .splash-term-row.tcmd { color: #ccc5bc; }
+    .splash-cursor {
+      display: inline-block;
+      width: 7px; height: 1em;
+      background: var(--orange);
+      vertical-align: text-bottom;
+      margin-left: 2px;
+      animation: splashBlink 0.7s step-end infinite;
+    }
+    @keyframes splashBlink { 50% { opacity: 0; } }
+    .splash-logo-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 22px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .splash-logo-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .splash-hex-wrap {
+      position: relative;
+      width: 72px; height: 72px;
+      flex-shrink: 0;
+    }
+    .splash-hex-wrap svg { width: 100%; height: 100%; }
+    .splash-hex-initials {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--orange);
+      letter-spacing: 1px;
+    }
+    .splash-logo-text { display: flex; flex-direction: column; align-items: flex-start; }
+    .splash-logo-name {
+      font-family: var(--font-cond);
+      font-weight: 900;
+      font-size: clamp(2.4rem, 6vw, 3.4rem);
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      line-height: 1;
+      color: var(--white);
+    }
+    .splash-logo-name .sd { color: var(--orange); }
+    .splash-logo-sub {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .splash-tags-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .splash-tags-row.visible { opacity: 1; transform: translateY(0); }
+    .splash-stag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.02);
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .splash-stag.show { opacity: 1; transform: scale(1); }
+    .splash-stag.shot {
+      border-color: var(--orange2);
+      color: var(--orange);
+      background: rgba(240,90,26,0.07);
+    }
+  </style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-progress-bar"><div class="splash-progress-fill" id="splashProg"></div></div>
+  <div class="splash-bg-grid"></div>
+  <div class="splash-bg-glow"></div>
+  <div class="splash-inner">
+    <div class="splash-terminal-panel" id="splashTermPanel">
+      <div class="splash-topbar">
+        <div class="splash-dot splash-dot-r"></div>
+        <div class="splash-dot splash-dot-y"></div>
+        <div class="splash-dot splash-dot-g"></div>
+        <span class="splash-topbar-title">jd-boot — zsh</span>
+      </div>
+      <div class="splash-term-body" id="splashTermBody"></div>
+    </div>
+    <div class="splash-logo-section" id="splashLogo">
+      <div class="splash-hex-wrap">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,4 93,27 93,73 50,96 7,73 7,27" fill="#161210" stroke="#2a1f15" stroke-width="1.5"/>
+          <polygon id="splashHexStroke" points="50,4 93,27 93,73 50,96 7,73 7,27"
+            fill="none" stroke="#f05a1a" stroke-width="1.8"
+            stroke-dasharray="240" stroke-dashoffset="240"/>
+        </svg>
+        <div class="splash-hex-initials">JD</div>
+      </div>
+      <div class="splash-logo-text">
+        <div class="splash-logo-name">JOTTA <span class="sd">D</span>EV</div>
+        <div class="splash-logo-sub">JD Desenvolvimento de Software</div>
+      </div>
+    </div>
+    <div class="splash-tags-row" id="splashTagsRow">
+      <div class="splash-stag shot" id="st1">Casino Online</div>
+      <div class="splash-stag shot" id="st2">Nicho Hot</div>
+      <div class="splash-stag" id="st3">Pagamentos</div>
+      <div class="splash-stag" id="st4">Sites &amp; Apps</div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <div class="hex-badge">
+      <svg viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 3L97 29V86L50 112L3 86V29L50 3Z"
+              stroke="#f05a1a" stroke-width="5" fill="none"/>
+      </svg>
+      <div class="hex-initials">JD</div>
+    </div>
+    <div class="logo-text-block">
+      <div class="logo-title">
+        <span class="j">J</span><span class="otta">OTTA</span><br/>
+        <span class="d">D</span><span class="ev">EV</span>
+      </div>
+      <div class="logo-sub">// Dev Studio</div>
+    </div>
+  </div>
+
+  <!-- TAGS -->
+  <div class="header-tags">
+    <span class="htag">WEB</span>
+    <span class="htag">API</span>
+    <span class="htag">SCRIPTS</span>
+    <span class="htag">24/7</span>
+    <span class="htag htag-orange">CASSINOS</span>
+    <span class="htag htag-orange">SITES HOT</span>
+  </div>
+</header>
+
+<!-- SOCIAL STRIP -->
+<div class="social-strip">
+  <p class="social-strip-text">
+    <strong>Desenvolvimento sob medida para mercados exigentes.</strong> Converse com nossa equipe e descubra como transformar sua ideia em produto.
+  </p>
+  <div class="social-strip-buttons">
+  <a href="https://wa.me/message/I5X5H4TBABXXA1" target="_blank" class="social-btn btn-whatsapp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp
+  </a>
+  <a href="https://t.me/jottadev" target="_blank" class="social-btn btn-telegram">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    Telegram
+  </a>
+  <a href="https://instagram.com/jottadevstudio" target="_blank" class="social-btn btn-instagram">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+    Instagram
+  </a>
+  </div>
+</div>
+
+<!-- CONTADOR -->
+<div class="counter-strip" id="counterStrip">
+  <div class="counter-inner">
+    <div class="ci-item">
+      <div class="ci-num"><span class="ci-count" data-target="120">0</span><span class="ci-suffix">+</span></div>
+      <div class="ci-label">Projetos entregues</div>
+      <div class="ci-bar"></div>
+    </div>
+    <div class="ci-item">
+      <div class="ci-num"><span class="ci-count" data-target="100">0</span><span class="ci-suffix">%</span></div>
+      <div class="ci-label">Sigilo garantido</div>
+      <div class="ci-bar"></div>
+    </div>
+    <div class="ci-item">
+      <div class="ci-num"><span class="ci-count" data-target="98">0</span><span class="ci-suffix">%</span></div>
+      <div class="ci-label">Aprovação de pagamentos</div>
+      <div class="ci-bar"></div>
+    </div>
+    <div class="ci-item">
+      <div class="ci-num"><span class="ci-count" data-target="23">0</span><span class="ci-suffix">★</span></div>
+      <div class="ci-label">Avaliações 5 estrelas</div>
+      <div class="ci-bar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <div class="reviews-header">
+    <p class="section-label">// avaliações</p>
+    <h2>O que nossos clientes dizem</h2>
+    <div class="reviews-summary">
+      <span class="avg-score">4.8</span>
+      <span class="stars-display">★★★★★</span>
+      <span>· 23 avaliações verificadas</span>
+    </div>
+  </div>
+
+  <div class="reviews-track-wrap">
+    <div class="reviews-track" id="reviewsTrack">
+
+      <!-- 1 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">RM</div>
+          <div class="review-meta">
+            <div class="review-name">Rafael Moura</div>
+            <div class="review-role">Operador de Cassino Online</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Entregaram a plataforma completa no prazo combinado. Integração com os provedores de jogos funcionou de primeira. Equipe séria, sem enrolação.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+      <!-- 2 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">LS</div>
+          <div class="review-meta">
+            <div class="review-name">Lucas Santana</div>
+            <div class="review-role">Empreendedor Digital</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Minha landing page ficou absurda. Conversão subiu 40% na primeira semana. Recomendo demais pra quem quer resultado de verdade.</p>
+        <span class="review-tag">Landing Page</span>
+      </div>
+
+      <!-- 3 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">FC</div>
+          <div class="review-meta">
+            <div class="review-name">Fernanda Costa</div>
+            <div class="review-role">Produtora de Conteúdo Adulto</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Precisava de uma área de membros discreta e segura. A Jotta Dev entendeu tudo sem julgamentos e entregou exatamente o que eu precisava.</p>
+        <span class="review-tag">Nicho Hot</span>
+      </div>
+
+      <!-- 4 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">PO</div>
+          <div class="review-meta">
+            <div class="review-name">Pedro Oliveira</div>
+            <div class="review-role">Dono de Plataforma de Apostas</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Sistema de afiliados funcionando perfeitamente. O back-office é muito bem pensado. Suporte pós-entrega rápido e eficiente.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+      <!-- 5 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">JA</div>
+          <div class="review-meta">
+            <div class="review-name">Juliana Alves</div>
+            <div class="review-role">E-commerce / Infoprodutos</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Checkout integrado com PIX transparente rodando liso. Zero problemas técnicos desde o lançamento. Valeu cada centavo investido.</p>
+        <span class="review-tag">Pagamentos</span>
+      </div>
+
+      <!-- 6 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">TM</div>
+          <div class="review-meta">
+            <div class="review-name">Thiago Melo</div>
+            <div class="review-role">Gestor de Tráfego</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Já indiquei a Jotta Dev pra três clientes meus. Todos ficaram satisfeitos. O site carrega rápido e o design é profissional demais.</p>
+        <span class="review-tag">Sites</span>
+      </div>
+
+      <!-- 7 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">CR</div>
+          <div class="review-meta">
+            <div class="review-name">Carlos Rocha</div>
+            <div class="review-role">Operador iGaming</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Migrei minha operação inteira pra plataforma que eles construíram. Estabilidade impecável mesmo nos horários de pico. Time de elite.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+      <!-- 8 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">BS</div>
+          <div class="review-meta">
+            <div class="review-name">Bruna Souza</div>
+            <div class="review-role">Criadora de Conteúdo</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Meu paywall ficou lindo e funcional. Os assinantes elogiam a experiência toda hora. A JD entende o nicho e respeita a privacidade.</p>
+        <span class="review-tag">Nicho Hot</span>
+      </div>
+
+      <!-- 9 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">MF</div>
+          <div class="review-meta">
+            <div class="review-name">Matheus Ferreira</div>
+            <div class="review-role">Startup SaaS</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">MVP entregue em 3 semanas. Código limpo, bem documentado e fácil de escalar. Já contratei para a segunda fase do produto.</p>
+        <span class="review-tag">Aplicativo Web</span>
+      </div>
+
+      <!-- 10 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">VN</div>
+          <div class="review-meta">
+            <div class="review-name">Vinícius Nunes</div>
+            <div class="review-role">Afiliado de Cassino</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Portal de afiliados top de linha. Relatórios em tempo real, links rastreados e tudo automatizado. Melhor investimento que fiz esse ano.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+      <!-- 11 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">AL</div>
+          <div class="review-meta">
+            <div class="review-name">Amanda Lima</div>
+            <div class="review-role">Negócio Digital</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Atendimento ágil e sem rodeios. Explicaram tudo em detalhes antes de começar e cumpriram o que prometeram até o último detalhe.</p>
+        <span class="review-tag">Sites</span>
+      </div>
+
+      <!-- 12 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">DP</div>
+          <div class="review-meta">
+            <div class="review-name">Diego Pinheiro</div>
+            <div class="review-role">Empreendedor / Apostas</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Plataforma no ar em tempo recorde. Suporte respondeu minha dúvida às 11 da noite. Comprometimento de outro nível.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+      <!-- 13 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">IR</div>
+          <div class="review-meta">
+            <div class="review-name">Isabela Ramos</div>
+            <div class="review-role">Modelo / Criadora Digital</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Nunca me senti julgada. Trataram meu projeto com total profissionalismo e sigilo. Resultado superou minhas expectativas.</p>
+        <span class="review-tag">Nicho Hot</span>
+      </div>
+
+      <!-- 14 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">RB</div>
+          <div class="review-meta">
+            <div class="review-name">Rodrigo Barbosa</div>
+            <div class="review-role">Gestor de Produtos Digitais</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">API integrada com o nosso sistema legado sem nenhuma fricção. Documentação impecável. Equipe técnica de alto nível.</p>
+        <span class="review-tag">API & Scripts</span>
+      </div>
+
+      <!-- 15 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">GV</div>
+          <div class="review-meta">
+            <div class="review-name">Gabriela Vieira</div>
+            <div class="review-role">Infoprodutora</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Site de vendas com checkout próprio. Taxa de aprovação dos pagamentos altíssima. Ganhei mais só otimizando o fluxo de compra.</p>
+        <span class="review-tag">Pagamentos</span>
+      </div>
+
+      <!-- 16 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">HM</div>
+          <div class="review-meta">
+            <div class="review-name">Henrique Martins</div>
+            <div class="review-role">Operador de iGaming</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Já trabalhei com várias agências e nenhuma entendeu o mercado de cassino como a Jotta Dev. Diferença absurda no nível técnico.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+      <!-- 17 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">NC</div>
+          <div class="review-meta">
+            <div class="review-name">Natália Carvalho</div>
+            <div class="review-role">Produtora de Conteúdo</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Automatizaram toda a entrega de conteúdo pro meu clube de assinaturas. Economizo horas por semana com o sistema que desenvolveram.</p>
+        <span class="review-tag">Nicho Hot</span>
+      </div>
+
+      <!-- 18 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">FA</div>
+          <div class="review-meta">
+            <div class="review-name">Felipe Andrade</div>
+            <div class="review-role">Dono de E-commerce</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Webhooks e notificações automáticas funcionando perfeitamente. Integração com Mercado Pago muito bem feita. Zero bugs em produção.</p>
+        <span class="review-tag">API & Scripts</span>
+      </div>
+
+      <!-- 19 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">LT</div>
+          <div class="review-meta">
+            <div class="review-name">Leonardo Teixeira</div>
+            <div class="review-role">Empreendedor / Apostas</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Confiança total desde a primeira conversa. Transparência no escopo, no prazo e no resultado. Vou com certeza contratar novamente.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+      <!-- 20 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">PS</div>
+          <div class="review-meta">
+            <div class="review-name">Priscila Silva</div>
+            <div class="review-role">Criadora Digital</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Área de membros com proteção de conteúdo top. Meus assinantes adoraram a interface. A JD sabe o que está fazendo, sem dúvida.</p>
+        <span class="review-tag">Nicho Hot</span>
+      </div>
+
+      <!-- 21 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">WG</div>
+          <div class="review-meta">
+            <div class="review-name">Wallace Gomes</div>
+            <div class="review-role">Gestor de Afiliados</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Painel de afiliados muito bem construído. Visual profissional, dados em tempo real e sem lentidão. Parceiros adoraram a ferramenta.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+      <!-- 22 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">KR</div>
+          <div class="review-meta">
+            <div class="review-name">Karen Ribeiro</div>
+            <div class="review-role">Empreendedora Digital</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Minha primeira experiência com dev especializado. Não sabia que fazia tanta diferença. Não troco por agência genérica nunca mais.</p>
+        <span class="review-tag">Sites</span>
+      </div>
+
+      <!-- 23 -->
+      <div class="review-card">
+        <div class="review-top">
+          <div class="review-avatar">EX</div>
+          <div class="review-meta">
+            <div class="review-name">Eduardo Xavier</div>
+            <div class="review-role">Operador / iGaming</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+        </div>
+        <p class="review-text">Três projetos entregues com a Jotta Dev e todos impecáveis. É raro encontrar uma equipe técnica que entende o negócio tão bem quanto o código.</p>
+        <span class="review-tag">Casino</span>
+      </div>
+
+    </div>
+    <div class="reviews-fade-right"></div>
+  </div>
+  <p class="scroll-hint"><span>←</span> deslize para ver mais avaliações <span>→</span></p>
+</section>
+
+<!-- MAIN -->
+<main>
+
+  <!-- SOBRE -->
+  <div class="section">
+    <p class="section-label">// sobre</p>
+    <h2>Quem é a Jotta Dev</h2>
+    <p>
+      A <strong>Jotta Dev — JD Desenvolvimento de Software</strong> é uma empresa especializada no desenvolvimento
+      de aplicativos e sites profissionais para nichos que exigem tecnologia de ponta, integração de pagamentos
+      eficiente e execução sem margem para erros.
+    </p>
+    <p>
+      Fundada para atender mercados que o desenvolvimento genérico não consegue servir bem,
+      a JD combina expertise técnica real com compreensão profunda de negócios digitais de alta performance —
+      em especial plataformas de cassino online e o nicho adulto (hot).
+    </p>
+    <p>
+      Cada projeto é construído com foco em três pilares inegociáveis:
+      <strong>velocidade</strong>, <strong>estabilidade</strong> e <strong>conversão</strong>.
+    </p>
+  </div>
+
+  <!-- SERVIÇOS -->
+  <div class="section">
+    <p class="section-label">// serviços</p>
+    <h2>O que desenvolvemos</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Sites Profissionais</h3>
+        <p>Landing pages, páginas de vendas e portais com design direcionado à conversão.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h3>Aplicativos Web</h3>
+        <p>Sistemas completos com painel admin, autenticação e lógica de negócio customizada.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💳</div>
+        <h3>Checkout &amp; Pagamentos</h3>
+        <p>Integração com Mercado Pago, PIX transparente, gateways e fluxos de assinatura.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎰</div>
+        <h3>Plataformas Casino</h3>
+        <p>Back-office, gestão de apostas, afiliados e integração com provedores de jogos.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔥</div>
+        <h3>Nicho Hot</h3>
+        <p>Área de membros, paywall, automações e proteção de conteúdo adulto.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <h3>APIs &amp; Scripts</h3>
+        <p>Webhooks, e-mails transacionais, notificações e integrações externas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NICHOS -->
+  <div class="section">
+    <p class="section-label">// especialidade</p>
+    <h2>Especialistas onde outros recuam</h2>
+    <div class="niche-row">
+      <div class="niche-card niche-casino">
+        <p class="niche-title">🎰 Casino Online</p>
+        <p>Plataformas completas para operadores: sistema de afiliados, gestão de saldo, integração com provedores internacionais e painéis administrativos robustos.</p>
+      </div>
+      <div class="niche-card niche-hot">
+        <p class="niche-title">🔥 Nicho Hot</p>
+        <p>Área de membros protegida, checkout discreto, paywall por conteúdo, gestão de assinantes e automação de entrega com privacidade total.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANIFESTO -->
+  <div class="section">
+    <p class="section-label">// nossa visão</p>
+    <blockquote>
+      "Mercados exigentes não precisam de soluções genéricas. Precisam de uma equipe que entende
+      o negócio antes de escrever a primeira linha de código — e que entrega sem desculpas,
+      no prazo, com o resultado prometido."
+      <cite>— Jotta Dev · JD Desenvolvimento de Software</cite>
+    </blockquote>
+  </div>
+
+  <!-- DIFERENCIAIS -->
+  <div class="section">
+    <p class="section-label">// por que a jotta dev</p>
+    <h2>Nossos diferenciais</h2>
+    <ul class="diff-list">
+      <li>Experiência real em mercados de alto volume — cassino e nicho hot sem julgamentos</li>
+      <li>Integração nativa com gateways brasileiros: Mercado Pago, PIX transparente, boleto e cartão</li>
+      <li>Stack moderno e escalável: PHP, APIs RESTful, infraestrutura preparada para crescimento</li>
+      <li>Entregas objetivas — escopo claro, prazo respeitado, código documentado</li>
+      <li>Suporte técnico contínuo pós-entrega e manutenção proativa</li>
+      <li>Confidencialidade absoluta: seus dados, seus clientes, seu negócio — sigilo total</li>
+    </ul>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h2>Pronto para construir algo sério?</h2>
+    <p>Fale com a Jotta Dev e transforme sua ideia em um produto que funciona de verdade.</p>
+    <div class="cta-btn-wrap">
+      <a href="https://wa.me/message/I5X5H4TBABXXA1" target="_blank" class="cta-btn">Falar com a equipe →</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span>Jotta Dev</span> · JD Desenvolvimento de Software · Tecnologia para mercados que exigem o melhor
+</footer>
+
+<script>
+(function() {
+  var LINES = [
+    { type: 'cmd',  text: '$ jd --boot production' },
+    { type: 'info', text: '→ verificando ambiente...' },
+    { type: 'ok',   text: '✓ módulos de pagamento OK' },
+    { type: 'ok',   text: '✓ conexão com gateways OK' },
+    { type: 'warn', text: '⚡ modo confidencial ativado' },
+    { type: 'cmd',  text: '$ launch --env=jottadev' },
+  ];
+
+  var timers = [];
+  function t(fn, ms) { timers.push(setTimeout(fn, ms)); }
+
+  function setProgress(pct) {
+    var el = document.getElementById('splashProg');
+    if (el) el.style.width = pct + '%';
+  }
+
+  function addRow(line, isLast) {
+    var body = document.getElementById('splashTermBody');
+    if (!body) return;
+    var row = document.createElement('div');
+    row.className = 'splash-term-row' +
+      (line.type === 'ok'   ? ' tok'   : '') +
+      (line.type === 'warn' ? ' twarn' : '') +
+      (line.type === 'cmd'  ? ' tcmd'  : '');
+
+    if (line.type === 'cmd') {
+      row.innerHTML = '<span class="splash-prompt">›</span>' + line.text;
+    } else if (line.type === 'ok' || line.type === 'warn') {
+      row.innerHTML = '<span class="splash-icon">' + line.text.charAt(0) + '</span>' + line.text.slice(1);
+    } else {
+      row.textContent = line.text;
+    }
+
+    if (isLast) {
+      row.innerHTML += '<span class="splash-cursor"></span>';
+    }
+
+    body.appendChild(row);
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() { row.classList.add('show'); });
+    });
+  }
+
+  function runSplash() {
+    var splash     = document.getElementById('splash');
+    var termPanel  = document.getElementById('splashTermPanel');
+    var splashLogo = document.getElementById('splashLogo');
+    var tagsRow    = document.getElementById('splashTagsRow');
+    var hexStroke  = document.getElementById('splashHexStroke');
+
+    if (!splash) return;
+
+    setProgress(0);
+
+    t(function() {
+      termPanel.classList.add('visible');
+      setProgress(8);
+    }, 100);
+
+    LINES.forEach(function(line, i) {
+      t(function() {
+        addRow(line, i === LINES.length - 1);
+        setProgress(8 + (i + 1) * 10);
+      }, 300 + i * 380);
+    });
+
+    var afterTerm = 300 + LINES.length * 380;
+
+    t(function() {
+      splashLogo.classList.add('visible');
+      setProgress(80);
+      hexStroke.style.transition = 'stroke-dashoffset 1.2s ease';
+      hexStroke.setAttribute('stroke-dashoffset', '0');
+    }, afterTerm + 100);
+
+    t(function() { tagsRow.classList.add('visible'); },            afterTerm + 500);
+    t(function() { document.getElementById('st1').classList.add('show'); }, afterTerm + 600);
+    t(function() { document.getElementById('st2').classList.add('show'); }, afterTerm + 750);
+    t(function() { document.getElementById('st3').classList.add('show'); }, afterTerm + 900);
+    t(function() { document.getElementById('st4').classList.add('show'); }, afterTerm + 1050);
+
+    t(function() { setProgress(100); }, afterTerm + 1200);
+
+    t(function() {
+      splash.classList.add('hide');
+      setTimeout(function() { splash.style.display = 'none'; }, 700);
+    }, afterTerm + 2000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runSplash);
+  } else {
+    runSplash();
+  }
+})();
+  // ── CONTADOR ANIMADO ──
+  (function() {
+    function easeOutExpo(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+    function animCount(el, target, duration) {
+      var start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / duration, 1);
+        el.textContent = Math.floor(target * easeOutExpo(p));
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(step);
+    }
+    var fired = false;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !fired) {
+          fired = true;
+          var els = document.querySelectorAll('.ci-count');
+          var bars = document.querySelectorAll('.ci-bar');
+          els.forEach(function(el, i) {
+            setTimeout(function() {
+              animCount(el, parseInt(el.dataset.target), 1400);
+              if (bars[i]) setTimeout(function() { bars[i].style.width = '100%'; }, 150);
+            }, i * 180);
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+    var strip = document.getElementById('counterStrip');
+    if (strip) obs.observe(strip);
+  })();
+</script>
+</body>
+</html>
