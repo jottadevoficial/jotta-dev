@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Como Funciona — Jotta Dev</title>
+<link rel="icon" type="image/svg+xml" href="https://jottadevoficial.github.io/jotta-dev/favicon.svg">
+<meta name="description" content="Veja como funciona o processo da Jotta Dev: do briefing à entrega do seu site, app ou plataforma.">
+<link rel="canonical" href="https://jottadevoficial.github.io/jotta-dev/como-funciona.html">
+<meta property="og:title" content="Como Funciona — Jotta Dev">
+<meta property="og:description" content="Veja como funciona o processo da Jotta Dev: do briefing à entrega do seu site, app ou plataforma.">
+<meta property="og:image" content="https://jottadevoficial.github.io/jotta-dev/og-image.png">
+<meta property="og:url" content="https://jottadevoficial.github.io/jotta-dev/como-funciona.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Como Funciona — Jotta Dev">
+<meta name="twitter:description" content="Veja como funciona o processo da Jotta Dev: do briefing à entrega do seu site, app ou plataforma.">
+<meta name="twitter:image" content="https://jottadevoficial.github.io/jotta-dev/og-image.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Barlow+Condensed:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --bg:#0e0b09; --surface:#161210; --border:#2a1f15;
+    --orange:#f05a1a; --orange2:#e03a00; --white:#f2f0ec; --muted:#7a6f68;
+    --font-head:'Barlow',sans-serif; --font-cond:'Barlow Condensed',sans-serif; --font-mono:'Space Mono',monospace;
+  }
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--white);font-family:var(--font-head);line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+  /* ── NAVBAR ── */
+  .navbar{position:sticky;top:0;z-index:100;background:rgba(14,11,9,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}
+  .navbar-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .navbar-logo{font-family:var(--font-cond);font-weight:900;font-size:1.3rem;text-transform:uppercase;color:var(--white);text-decoration:none;letter-spacing:-0.5px;}
+  .navbar-logo .d{color:var(--orange);}
+  .back-link{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:3px;transition:border-color .2s,color .2s;}
+  .back-link:hover{border-color:var(--orange2);color:var(--orange);}
+  .navbar-links-desktop{display:flex;align-items:center;gap:26px;}
+  .navbar-links-desktop a{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .navbar-links-desktop a:hover{color:var(--orange);}
+  .navbar-links-desktop a.navbar-cta{color:var(--orange);border:1px solid var(--orange2);padding:8px 16px;border-radius:3px;background:rgba(240,90,26,0.07);}
+  .navbar-links-desktop a.navbar-cta:hover{background:rgba(240,90,26,0.14);}
+  @media (max-width:760px){ .navbar-links-desktop{display:none;} }
+
+  /* ── HEADER DA PÁGINA ── */
+  .page-header{max-width:680px;margin:0 auto;padding:64px 24px 20px;text-align:center;}
+  .section-label{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:14px;}
+  .page-header h1{font-family:var(--font-cond);font-size:clamp(1.8rem,5vw,2.6rem);font-weight:900;text-transform:uppercase;letter-spacing:-0.5px;line-height:1.1;margin-bottom:14px;}
+  .page-header p{color:#b8b0a8;font-size:1rem;}
+
+  main{max-width:680px;margin:0 auto;padding:40px 24px 80px;}
+
+  /* ── TIMELINE ── */
+  .timeline{display:flex;flex-direction:column;gap:0;}
+  .tl-step{display:flex;gap:20px;position:relative;padding-bottom:36px;}
+  .tl-step:last-child{padding-bottom:0;}
+  .tl-marker{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+  .tl-num{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--orange2);background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:var(--font-cond);font-weight:900;color:var(--orange);font-size:1.05rem;}
+  .tl-line{flex:1;width:1.5px;background:var(--border);margin-top:4px;}
+  .tl-content{padding-top:5px;}
+  .tl-title{font-family:var(--font-cond);font-weight:900;text-transform:uppercase;font-size:1.15rem;margin-bottom:6px;}
+  .tl-desc{font-size:0.92rem;color:#b8b0a8;max-width:520px;}
+
+  /* ── CTA ── */
+  .cta-box{max-width:680px;margin:0 auto;padding:40px 24px 0;text-align:center;}
+  .cta-box h2{font-family:var(--font-cond);font-size:clamp(1.4rem,3.5vw,2rem);font-weight:900;text-transform:uppercase;margin-bottom:10px;}
+  .cta-box p{color:var(--muted);margin-bottom:24px;font-size:0.95rem;}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#0e0b09;font-family:var(--font-mono);font-weight:700;font-size:0.78rem;letter-spacing:1px;text-transform:uppercase;padding:14px 28px;border-radius:4px;text-decoration:none;transition:background .2s;}
+  .cta-btn:hover{background:var(--orange2);}
+
+  footer{text-align:center;font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:0.5px;padding:48px 24px 100px;border-top:1px solid var(--border);margin-top:60px;}
+  footer a{color:var(--muted);}
+
+  /* ── BOTÃO FLUTUANTE WHATSAPP ── */
+  .wa-float{position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,0.4);text-decoration:none;transition:transform .2s;}
+  .wa-float:hover{transform:scale(1.08);}
+  .wa-float svg{width:26px;height:26px;}
+  .wa-float-ping{position:absolute;inset:0;border-radius:50%;background:#25d366;animation:wapulse 2s infinite;}
+  @keyframes wapulse{0%{transform:scale(1);opacity:.5;}100%{transform:scale(1.6);opacity:0;}}
+
+  /* ── INDICADOR DE TEMPO DE RESPOSTA ── */
+  .response-indicator{display:inline-flex;align-items:center;gap:10px;background:rgba(240,90,26,0.07);border:1px solid var(--orange2);border-radius:30px;padding:9px 18px;font-family:var(--font-mono);font-size:0.72rem;color:var(--orange);margin-top:18px;}
+  .pulse-dot{width:8px;height:8px;border-radius:50%;background:#3ecf6e;position:relative;flex-shrink:0;}
+  .pulse-dot::after{content:'';position:absolute;inset:0;border-radius:50%;background:#3ecf6e;animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%{transform:scale(1);opacity:.7;}100%{transform:scale(2.4);opacity:0;}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="https://jottadevoficial.github.io/jotta-dev/" class="back-link">← Voltar ao site</a>
+    <a href="https://jottadevoficial.github.io/jotta-dev/" class="navbar-logo">JOTTA<span class="d">D</span>EV</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <p class="section-label">// processo</p>
+  <h1>Como funciona</h1>
+  <p>Do primeiro contato até o seu projeto no ar — sem mistério, sem enrolação.</p>
+</div>
+
+<main>
+  <div class="timeline">
+    <div class="tl-step">
+      <div class="tl-marker"><div class="tl-num">1</div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <p class="tl-title">Briefing</p>
+        <p class="tl-desc">Conversamos sobre seu projeto, objetivo e nicho pelo WhatsApp ou Telegram. Entendemos o que você precisa de verdade antes de falar em código.</p>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-marker"><div class="tl-num">2</div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <p class="tl-title">Proposta</p>
+        <p class="tl-desc">Enviamos escopo, prazo e valor fechado — sem letras miúdas nem surpresas no meio do caminho.</p>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-marker"><div class="tl-num">3</div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <p class="tl-title">Desenvolvimento</p>
+        <p class="tl-desc">Construímos com atualizações periódicas, sem você precisar ficar cobrando. Você acompanha o progresso real do projeto.</p>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-marker"><div class="tl-num">4</div></div>
+      <div class="tl-content">
+        <p class="tl-title">Entrega &amp; Suporte</p>
+        <p class="tl-desc">Site, app ou plataforma no ar, com suporte técnico contínuo pós-lançamento e manutenção proativa.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h2>Pronto para começar?</h2>
+    <p>Fale com a equipe e receba uma proposta personalizada para o seu projeto.</p>
+    <a href="https://wa.me/message/I5X5H4TBABXXA1" target="_blank" rel="noopener noreferrer" class="cta-btn">Falar com a equipe →</a>
+    <div style="display:flex; justify-content:center;">
+      <div class="response-indicator">
+        <span class="pulse-dot"></span>
+        Respondemos em até 2h úteis
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Jotta Dev</span> · JD Desenvolvimento de Software · Tecnologia para mercados que exigem o melhor
+  <br>
+  <a href="https://jottadevoficial.github.io/jotta-dev/privacidade.html">Política de Privacidade</a>
+  &nbsp;·&nbsp;
+  <a href="https://jottadevoficial.github.io/jotta-dev/termos.html">Termos de Uso</a>
+</footer>
+
+<a href="https://wa.me/message/I5X5H4TBABXXA1" target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="Falar no WhatsApp">
+  <span class="wa-float-ping"></span>
+  <svg viewBox="0 0 32 32" fill="#fff"><path d="M16.04 2.67C8.6 2.67 2.57 8.7 2.57 16.14c0 2.43.64 4.71 1.75 6.69L2.5 29.33l6.68-1.75a13.4 13.4 0 0 0 6.86 1.87c7.44 0 13.47-6.03 13.47-13.47S23.48 2.67 16.04 2.67zm0 24.5c-2.13 0-4.12-.58-5.84-1.6l-.42-.25-4.34 1.14 1.16-4.22-.27-.43a11.13 11.13 0 0 1-1.7-5.95c0-6.18 5.03-11.2 11.21-11.2 6.18 0 11.2 5.02 11.2 11.2s-5.02 11.31-11.2 11.31zm6.13-8.4c-.34-.17-1.98-.98-2.29-1.09-.31-.11-.53-.17-.76.17-.22.34-.87 1.09-1.07 1.32-.2.22-.39.25-.73.08-.34-.17-1.43-.53-2.72-1.69-1.01-.9-1.69-2.01-1.89-2.35-.2-.34-.02-.52.15-.69.15-.15.34-.39.51-.59.17-.2.22-.34.34-.56.11-.22.06-.42-.03-.59-.08-.17-.76-1.83-1.04-2.5-.27-.66-.55-.57-.76-.57-.2 0-.42-.03-.65-.03-.22 0-.59.08-.9.42-.31.34-1.18 1.15-1.18 2.81 0 1.65 1.21 3.25 1.37 3.47.17.22 2.37 3.61 5.74 5.07.8.35 1.43.55 1.92.71.81.26 1.54.22 2.12.13.65-.1 1.98-.81 2.26-1.59.28-.78.28-1.45.2-1.59-.08-.14-.31-.22-.65-.39z"/></svg>
+</a>
+
+</body>
+</html>
